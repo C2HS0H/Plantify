@@ -1,0 +1,261 @@
+{% extends 'base.html' %} {% block title %}Plantify - Home{% endblock %} {%
+block body %}
+<section id="home" class="hero-bg text-white min-h-screen flex items-center">
+  <div class="container mx-auto px-6 text-center">
+    <h1 class="text-3xl md:text-5xl font-bold leading-tight mb-4">
+      AI-Powered Insights for Healthier Plants
+    </h1>
+    <p class="text-lg md:text-xl text-gray-200 mb-8">
+      Protect your crops and boost yields effortlessly with instant, accurate
+      diagnostics.
+    </p>
+    <a
+      href="#how-it-works"
+      class="bg-green-600 text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-green-700 transition duration-300"
+      >Learn more &rarr;</a
+    >
+  </div>
+</section>
+
+<section id="how-it-works" class="py-20 bg-white">
+  <div class="container mx-auto px-6 text-center">
+    <h2 class="text-3xl font-bold mb-2">Get Your Diagnosis in 3 Easy Steps</h2>
+    <p class="text-gray-600 mb-12 max-w-3xl mx-auto">
+      Our intuitive platform makes plant health monitoring effortless and
+      accessible to everyone.
+    </p>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div
+        class="bg-white p-8 rounded-xl shadow-md transition-all duration-300 hover:shadow-xl hover:-translate-y-2"
+      >
+        <div class="bg-green-100 rounded-full p-6 mb-4 inline-block">
+          <i class="fas fa-upload text-4xl text-green-600"></i>
+        </div>
+        <h3 class="text-xl font-bold mb-2">1. Upload Image</h3>
+        <p class="text-gray-600">
+          Take a clear photo of the affected plant leaf and upload it to our
+          platform.
+        </p>
+      </div>
+      <div
+        class="bg-white p-8 rounded-xl shadow-md transition-all duration-300 hover:shadow-xl hover:-translate-y-2"
+      >
+        <div class="bg-green-100 rounded-full p-6 mb-4 inline-block">
+          <i class="fas fa-robot text-4xl text-green-600"></i>
+        </div>
+        <h3 class="text-xl font-bold mb-2">2. AI Analysis</h3>
+        <p class="text-gray-600">
+          Our advanced CNN model analyzes the image in real-time to identify
+          potential diseases.
+        </p>
+      </div>
+      <div
+        class="bg-white p-8 rounded-xl shadow-md transition-all duration-300 hover:shadow-xl hover:-translate-y-2"
+      >
+        <div class="bg-green-100 rounded-full p-6 mb-4 inline-block">
+          <i class="fas fa-notes-medical text-4xl text-green-600"></i>
+        </div>
+        <h3 class="text-xl font-bold mb-2">3. Get Diagnosis</h3>
+        <p class="text-gray-600">
+          Receive an accurate diagnosis along with actionable management advice
+          and treatment options.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="diagnose" class="py-20 bg-gray-50">
+  <div class="container mx-auto px-6">
+    <div class="max-w-4xl mx-auto text-center">
+      <h2 class="text-3xl font-bold">Diagnose Your Plant Now</h2>
+      <p class="text-gray-600 mt-2 mb-10">
+        Upload a leaf image and get an instant disease diagnosis.
+      </p>
+    </div>
+    <div class="max-w-2xl mx-auto bg-white p-8 rounded-xl shadow-lg">
+      <form
+        id="upload-form"
+        action="/diagnose"
+        method="POST"
+        enctype="multipart/form-data"
+      >
+        <input type="hidden" id="image-b64-input" name="image_b64" required />
+
+        <label for="file-upload" class="cursor-pointer">
+          <div
+            id="upload-box"
+            class="border-4 border-dashed border-gray-200 rounded-lg p-10 text-center hover:border-green-400 transition"
+          >
+            <i class="fas fa-cloud-upload-alt text-5xl text-gray-400"></i>
+            <p class="mt-4 text-lg text-gray-600">
+              Drag & drop your image here, or
+              <span class="text-green-600 font-semibold">click to browse</span>
+            </p>
+            <p class="text-sm text-gray-500 mt-1">PNG, JPG, JPEG up to 10MB</p>
+          </div>
+        </label>
+        <input
+          id="file-upload"
+          type="file"
+          class="hidden"
+          accept="image/png, image/jpeg"
+        />
+
+        <div id="preview-container" class="mt-4 hidden relative w-max mx-auto">
+          <img
+            id="image-preview"
+            src=""
+            alt="Preview"
+            class="w-48 h-48 object-cover rounded-lg shadow-md"
+          />
+          <button
+            type="button"
+            id="delete-btn"
+            class="absolute -top-3 -right-3 bg-red-600 text-white rounded-full h-8 w-8 flex items-center justify-center text-lg font-bold hover:bg-red-700 transition"
+          >
+            ×
+          </button>
+        </div>
+
+        <button
+          type="submit"
+          id="submit-btn"
+          class="w-full bg-green-600 text-white py-3 px-6 rounded-lg mt-6 text-lg font-semibold hover:bg-green-700 transition duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+          disabled
+        >
+          Detect Disease
+        </button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<section id="diseases" class="py-20 bg-white">
+  <div class="container mx-auto px-6">
+    <div class="text-center mb-12">
+      <h2 class="text-3xl font-bold">We Detect a Wide Range of Diseases</h2>
+      <p class="text-gray-600 mt-2 max-w-3xl mx-auto">
+        Our model is trained on a diverse dataset to identify numerous common
+        and rare plant diseases across various species.
+      </p>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+      <div
+        class="bg-white rounded-lg shadow-md overflow-hidden group transition-all duration-300 hover:shadow-xl hover:-translate-y-2"
+      >
+        <img
+          src="https://www.owentree.com/clientuploads/blog/Apple_Scab-spots_on_leaves_24-12-02.jpg"
+          alt="Apple Scab"
+          class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+        />
+        <div class="p-4 text-center">
+          <h3 class="text-lg font-bold">Apple Scab</h3>
+        </div>
+      </div>
+      <div
+        class="bg-white rounded-lg shadow-md overflow-hidden group transition-all duration-300 hover:shadow-xl hover:-translate-y-2"
+      >
+        <img
+          src="https://ohioline.osu.edu/sites/ohioline/files/imce/Plant_Pathology/PLNTPTH-CER-02_Figure_1.png"
+          alt="Corn Common Rust"
+          class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+        />
+        <div class="p-4 text-center">
+          <h3 class="text-lg font-bold">Corn Common Rust</h3>
+        </div>
+      </div>
+      <div
+        class="bg-white rounded-lg shadow-md overflow-hidden group transition-all duration-300 hover:shadow-xl hover:-translate-y-2"
+      >
+        <img
+          src="https://vegcropshotline.org//wp-content/uploads/2016/02/607-155-0.jpg"
+          alt="Tomato Leaf Mold"
+          class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+        />
+        <div class="p-4 text-center">
+          <h3 class="text-lg font-bold">Tomato Leaf Mold</h3>
+        </div>
+      </div>
+      <div
+        class="bg-white rounded-lg shadow-md overflow-hidden group transition-all duration-300 hover:shadow-xl hover:-translate-y-2"
+      >
+        <img
+          src="https://bpb-us-e1.wpmucdn.com/blogs.cornell.edu/dist/3/7313/files/2021/04/powdery-mildew1.jpg"
+          alt="Grape Powdery Mildew"
+          class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+        />
+        <div class="p-4 text-center">
+          <h3 class="text-lg font-bold">Grape Powdery Mildew</h3>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  const fileInput = document.getElementById("file-upload");
+  const b64Input = document.getElementById("image-b64-input");
+  const previewContainer = document.getElementById("preview-container");
+  const previewImage = document.getElementById("image-preview");
+  const submitBtn = document.getElementById("submit-btn");
+  const deleteBtn = document.getElementById("delete-btn");
+  const uploadBox = document.getElementById("upload-box");
+
+  function handleFile(file) {
+    if (file && file.type.startsWith("image/")) {
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        const base64String = e.target.result;
+        previewImage.src = base64String;
+        b64Input.value = base64String;
+
+        previewContainer.classList.remove("hidden");
+        uploadBox.classList.add("hidden");
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+
+  fileInput.addEventListener("change", () => {
+    if (fileInput.files.length > 0) {
+      submitBtn.disabled = false;
+    } else {
+      submitBtn.disabled = true;
+    }
+  });
+
+  if (deleteBtn) {
+    deleteBtn.addEventListener("click", () => {
+      fileInput.value = "";
+      previewContainer.classList.add("hidden");
+      submitBtn.disabled = true;
+    });
+  }
+
+  fileInput.addEventListener("change", function () {
+    handleFile(this.files[0]);
+  });
+
+  deleteBtn.addEventListener("click", function () {
+    fileInput.value = "";
+    b64Input.value = "";
+    previewImage.src = "";
+    previewContainer.classList.add("hidden");
+    uploadBox.classList.remove("hidden");
+  });
+
+  uploadBox.addEventListener("dragover", (e) => {
+    e.preventDefault();
+    uploadBox.classList.add("border-green-400");
+  });
+  uploadBox.addEventListener("dragleave", () => {
+    uploadBox.classList.remove("border-green-400");
+  });
+  uploadBox.addEventListener("drop", (e) => {
+    e.preventDefault();
+    uploadBox.classList.remove("border-green-400");
+    handleFile(e.dataTransfer.files[0]);
+  });
+</script>
+{% endblock %}
